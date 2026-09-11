@@ -1,0 +1,22 @@
+{
+  "name": "assignment-w3",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "@prisma/orm-postgres": "8.0.0-rc.9",
+    "dotenv": "^17.4.2",
+    "hono": "^4.13.7"
+  },
+  "devDependencies": {
+    "@prisma/cli-engine": "0.2.3",
+    "@types/node": "^26.1.1",
+    "prisma": "8.0.0-rc.10",
+    "tsx": "^4.23.0",
+    "typescript": "^7.0.2"
+  }
+}
