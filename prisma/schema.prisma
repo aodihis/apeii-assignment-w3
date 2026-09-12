@@ -6,7 +6,7 @@ enum JobStatus {
   FAILED = "failed"
 }
 model Job {
-  id Uuid @id @default(uuid())
+  id String @id @default(uuid())
   goal      String
   equipment String
   availableTime String
@@ -16,9 +16,9 @@ model Job {
 }
 
 model JobResult {
-  id Uuid @id @default(uuid())
+  id String @id @default(uuid())
   plan      String
-  jobId Uuid
+  jobId String
   job Job @relation(fields: [jobId], references: [id])
   createdAt TimestamptzString @default(now())
   updatedAt temporal.updatedAtString()

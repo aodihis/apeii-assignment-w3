@@ -69,7 +69,7 @@
               "id": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/uuid@1",
+                  "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
               },
@@ -135,14 +135,14 @@
               "id": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/uuid@1",
+                  "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
               },
               "jobId": {
                 "nullable": false,
                 "type": {
-                  "codecId": "pg/uuid@1",
+                  "codecId": "pg/text@1",
                   "kind": "scalar"
                 }
               },
@@ -243,8 +243,8 @@
                   "nullable": false
                 },
                 "id": {
-                  "codecId": "pg/uuid@1",
-                  "nativeType": "uuid",
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
                   "nullable": false
                 },
                 "status": {
@@ -289,13 +289,13 @@
                   "nullable": false
                 },
                 "id": {
-                  "codecId": "pg/uuid@1",
-                  "nativeType": "uuid",
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
                   "nullable": false
                 },
                 "jobId": {
-                  "codecId": "pg/uuid@1",
-                  "nativeType": "uuid",
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
                   "nullable": false
                 },
                 "plan": {
@@ -360,7 +360,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "e2b8c5ff7fa2ae9da2096c3ac5c723c2048893f0e50ff17e3e5534deb176f0ae"
+    "storageHash": "c2bb5ce5377d0cbf1b907c1a14a0c2c784548ff4a016839feee08a5e668bc7c0"
   },
   "execution": {
     "executionHash": "362ac0e4996287d38dee419f65eef2c21a35c33ac996c9dc3c6ef4c2110e4268",

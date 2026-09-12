@@ -33,7 +33,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'e2b8c5ff7fa2ae9da2096c3ac5c723c2048893f0e50ff17e3e5534deb176f0ae'>;
+  StorageHashBase<'c2bb5ce5377d0cbf1b907c1a14a0c2c784548ff4a016839feee08a5e668bc7c0'>;
 export type ExecutionHash =
   ExecutionHashBase<'362ac0e4996287d38dee419f65eef2c21a35c33ac996c9dc3c6ef4c2110e4268'>;
 export type ProfileHash =
@@ -242,7 +242,7 @@ type DefaultLiteralValue<CodecId extends string, Encoded> = CodecId extends keyo
 export type FieldOutputTypes = {
   readonly public: {
     readonly Job: {
-      readonly id: CodecTypes['pg/uuid@1']['output'];
+      readonly id: CodecTypes['pg/text@1']['output'];
       readonly goal: CodecTypes['pg/text@1']['output'];
       readonly equipment: CodecTypes['pg/text@1']['output'];
       readonly availableTime: CodecTypes['pg/text@1']['output'];
@@ -251,9 +251,9 @@ export type FieldOutputTypes = {
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
     readonly JobResult: {
-      readonly id: CodecTypes['pg/uuid@1']['output'];
+      readonly id: CodecTypes['pg/text@1']['output'];
       readonly plan: CodecTypes['pg/text@1']['output'];
-      readonly jobId: CodecTypes['pg/uuid@1']['output'];
+      readonly jobId: CodecTypes['pg/text@1']['output'];
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
@@ -262,7 +262,7 @@ export type FieldOutputTypes = {
 export type FieldInputTypes = {
   readonly public: {
     readonly Job: {
-      readonly id: CodecTypes['pg/uuid@1']['input'];
+      readonly id: CodecTypes['pg/text@1']['input'];
       readonly goal: CodecTypes['pg/text@1']['input'];
       readonly equipment: CodecTypes['pg/text@1']['input'];
       readonly availableTime: CodecTypes['pg/text@1']['input'];
@@ -271,9 +271,9 @@ export type FieldInputTypes = {
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
     readonly JobResult: {
-      readonly id: CodecTypes['pg/uuid@1']['input'];
+      readonly id: CodecTypes['pg/text@1']['input'];
       readonly plan: CodecTypes['pg/text@1']['input'];
-      readonly jobId: CodecTypes['pg/uuid@1']['input'];
+      readonly jobId: CodecTypes['pg/text@1']['input'];
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
@@ -286,14 +286,14 @@ export type StorageColumnTypes = {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
       readonly equipment: CodecTypes['pg/text@1']['output'];
       readonly goal: CodecTypes['pg/text@1']['output'];
-      readonly id: CodecTypes['pg/uuid@1']['output'];
+      readonly id: CodecTypes['pg/text@1']['output'];
       readonly status: 'pending' | 'completed' | 'failed';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
     readonly jobResult: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
-      readonly id: CodecTypes['pg/uuid@1']['output'];
-      readonly jobId: CodecTypes['pg/uuid@1']['output'];
+      readonly id: CodecTypes['pg/text@1']['output'];
+      readonly jobId: CodecTypes['pg/text@1']['output'];
       readonly plan: CodecTypes['pg/text@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
@@ -306,14 +306,14 @@ export type StorageColumnInputTypes = {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
       readonly equipment: CodecTypes['pg/text@1']['input'];
       readonly goal: CodecTypes['pg/text@1']['input'];
-      readonly id: CodecTypes['pg/uuid@1']['input'];
+      readonly id: CodecTypes['pg/text@1']['input'];
       readonly status: 'pending' | 'completed' | 'failed';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
     readonly jobResult: {
       readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
-      readonly id: CodecTypes['pg/uuid@1']['input'];
-      readonly jobId: CodecTypes['pg/uuid@1']['input'];
+      readonly id: CodecTypes['pg/text@1']['input'];
+      readonly jobId: CodecTypes['pg/text@1']['input'];
       readonly plan: CodecTypes['pg/text@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
@@ -340,8 +340,8 @@ type ContractBase = Omit<
             readonly job: {
               columns: {
                 readonly id: {
-                  readonly nativeType: 'uuid';
-                  readonly codecId: 'pg/uuid@1';
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
                   readonly nullable: false;
                 };
                 readonly goal: {
@@ -388,8 +388,8 @@ type ContractBase = Omit<
             readonly jobResult: {
               columns: {
                 readonly id: {
-                  readonly nativeType: 'uuid';
-                  readonly codecId: 'pg/uuid@1';
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
                   readonly nullable: false;
                 };
                 readonly plan: {
@@ -398,8 +398,8 @@ type ContractBase = Omit<
                   readonly nullable: false;
                 };
                 readonly jobId: {
-                  readonly nativeType: 'uuid';
-                  readonly codecId: 'pg/uuid@1';
+                  readonly nativeType: 'text';
+                  readonly codecId: 'pg/text@1';
                   readonly nullable: false;
                 };
                 readonly createdAt: {
@@ -467,7 +467,7 @@ type ContractBase = Omit<
             readonly fields: {
               readonly id: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly goal: {
                 readonly nullable: false;
@@ -519,7 +519,7 @@ type ContractBase = Omit<
             readonly fields: {
               readonly id: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly plan: {
                 readonly nullable: false;
@@ -527,7 +527,7 @@ type ContractBase = Omit<
               };
               readonly jobId: {
                 readonly nullable: false;
-                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
+                readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
               readonly createdAt: {
                 readonly nullable: false;

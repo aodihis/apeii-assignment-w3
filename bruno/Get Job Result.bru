@@ -6,13 +6,19 @@ meta {
 
 get {
   url: {{baseUrl}}/plans/{{jobId}}
+  body: none
+  auth: none
+}
+
+vars:pre-request {
+  jobId: e265b198-5d62-40dc-a463-ee328bc869d0
 }
 
 tests {
   test("returns a job result response", function() {
     expect(res.getStatus()).to.be.oneOf([200, 404]);
   });
-
+  
   test("returns one plan or null", function() {
     const body = res.getBody();
     expect(body).to.have.property("plan");
