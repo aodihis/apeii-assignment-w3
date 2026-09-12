@@ -4,12 +4,12 @@
   "target": "postgres",
   "profileHash": "3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2",
   "roots": {
-    "planRequest": {
-      "model": "PlanRequest",
+    "job": {
+      "model": "Job",
       "namespace": "public"
     },
-    "planResult": {
-      "model": "PlanResult",
+    "jobResult": {
+      "model": "JobResult",
       "namespace": "public"
     }
   },
@@ -17,7 +17,7 @@
     "namespaces": {
       "public": {
         "enum": {
-          "RequestStatus": {
+          "JobStatus": {
             "codecId": "pg/text@1",
             "members": [
               {
@@ -32,7 +32,7 @@
           }
         },
         "models": {
-          "PlanRequest": {
+          "Job": {
             "fields": {
               "availableTime": {
                 "nullable": false,
@@ -77,7 +77,7 @@
                 },
                 "valueSet": {
                   "entityKind": "enum",
-                  "entityName": "RequestStatus",
+                  "entityName": "JobStatus",
                   "namespaceId": "public",
                   "plane": "domain"
                 }
@@ -116,10 +116,10 @@
                 }
               },
               "namespaceId": "public",
-              "table": "planRequest"
+              "table": "job"
             }
           },
-          "PlanResult": {
+          "JobResult": {
             "fields": {
               "createdAt": {
                 "nullable": false,
@@ -135,17 +135,17 @@
                   "kind": "scalar"
                 }
               },
+              "jobId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
               "plan": {
                 "nullable": false,
                 "type": {
                   "codecId": "pg/text@1",
-                  "kind": "scalar"
-                }
-              },
-              "requestId": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/uuid@1",
                   "kind": "scalar"
                 }
               },
@@ -158,18 +158,18 @@
               }
             },
             "relations": {
-              "request": {
+              "job": {
                 "cardinality": "N:1",
                 "on": {
                   "localFields": [
-                    "requestId"
+                    "jobId"
                   ],
                   "targetFields": [
                     "id"
                   ]
                 },
                 "to": {
-                  "model": "PlanRequest",
+                  "model": "Job",
                   "namespace": "public"
                 }
               }
@@ -182,18 +182,18 @@
                 "id": {
                   "column": "id"
                 },
+                "jobId": {
+                  "column": "jobId"
+                },
                 "plan": {
                   "column": "plan"
-                },
-                "requestId": {
-                  "column": "requestId"
                 },
                 "updatedAt": {
                   "column": "updatedAt"
                 }
               },
               "namespaceId": "public",
-              "table": "planResult"
+              "table": "jobResult"
             }
           }
         }
@@ -205,12 +205,12 @@
       "public": {
         "entries": {
           "table": {
-            "planRequest": {
+            "job": {
               "checks": [
                 {
                   "expression": "\"status\" IN ('pending', 'finnish')",
-                  "name": "planRequest_status_check_aa8e46e6",
-                  "prefix": "planRequest_status_check"
+                  "name": "job_status_check_aa8e46e6",
+                  "prefix": "job_status_check"
                 }
               ],
               "columns": {
@@ -253,7 +253,7 @@
                   "nullable": false,
                   "valueSet": {
                     "entityKind": "valueSet",
-                    "entityName": "RequestStatus",
+                    "entityName": "JobStatus",
                     "namespaceId": "public",
                     "plane": "storage"
                   }
@@ -273,7 +273,7 @@
               },
               "uniques": []
             },
-            "planResult": {
+            "jobResult": {
               "columns": {
                 "createdAt": {
                   "codecId": "pg/timestamptz-temporal@1",
@@ -289,14 +289,14 @@
                   "nativeType": "uuid",
                   "nullable": false
                 },
+                "jobId": {
+                  "codecId": "pg/uuid@1",
+                  "nativeType": "uuid",
+                  "nullable": false
+                },
                 "plan": {
                   "codecId": "pg/text@1",
                   "nativeType": "text",
-                  "nullable": false
-                },
-                "requestId": {
-                  "codecId": "pg/uuid@1",
-                  "nativeType": "uuid",
                   "nullable": false
                 },
                 "updatedAt": {
@@ -309,27 +309,27 @@
                 {
                   "source": {
                     "columns": [
-                      "requestId"
+                      "jobId"
                     ],
                     "namespaceId": "public",
-                    "tableName": "planResult"
+                    "tableName": "jobResult"
                   },
                   "target": {
                     "columns": [
                       "id"
                     ],
                     "namespaceId": "public",
-                    "tableName": "planRequest"
+                    "tableName": "job"
                   }
                 }
               ],
               "indexes": [
                 {
                   "columns": [
-                    "requestId"
+                    "jobId"
                   ],
-                  "name": "planResult_requestId_idx_fd667f92",
-                  "prefix": "planResult_requestId_idx",
+                  "name": "jobResult_jobId_idx_623c8f77",
+                  "prefix": "jobResult_jobId_idx",
                   "unique": false
                 }
               ],
@@ -342,7 +342,7 @@
             }
           },
           "valueSet": {
-            "RequestStatus": {
+            "JobStatus": {
               "kind": "valueSet",
               "values": [
                 "pending",
@@ -355,10 +355,10 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "dfa087db5834be08e7c52f53ec3270307ea522b2f6aba56080f18e4aaa94b582"
+    "storageHash": "9608805d5d7a8a82cac641c3efb328b8898fdbaf8e3de0396a4284d823d45aab"
   },
   "execution": {
-    "executionHash": "4958e70791d78b17602db6ab22aa633cf64e5aaa8704368060885827c9e40d51",
+    "executionHash": "362ac0e4996287d38dee419f65eef2c21a35c33ac996c9dc3c6ef4c2110e4268",
     "mutations": {
       "defaults": [
         {
@@ -369,7 +369,7 @@
           "ref": {
             "column": "id",
             "namespace": "public",
-            "table": "planRequest"
+            "table": "job"
           }
         },
         {
@@ -384,7 +384,7 @@
           "ref": {
             "column": "updatedAt",
             "namespace": "public",
-            "table": "planRequest"
+            "table": "job"
           }
         },
         {
@@ -395,7 +395,7 @@
           "ref": {
             "column": "id",
             "namespace": "public",
-            "table": "planResult"
+            "table": "jobResult"
           }
         },
         {
@@ -410,7 +410,7 @@
           "ref": {
             "column": "updatedAt",
             "namespace": "public",
-            "table": "planResult"
+            "table": "jobResult"
           }
         }
       ]

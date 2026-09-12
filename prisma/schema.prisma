@@ -1,24 +1,24 @@
 // use prisma-next
-enum RequestStatus {
+enum JobStatus {
   @@type("pg/text@1")
   PENDING = "pending"
   FINNISH = "finnish"
 }
-model PlanRequest {
+model Job {
   id Uuid @id @default(uuid())
   goal      String
   equipment String
   availableTime String
-  status  RequestStatus @default(PENDING)
+  status  JobStatus @default(PENDING)
   createdAt DateTime  @default(now())
   updatedAt temporal.updatedAtString()
 }
 
-model PlanResult {
+model JobResult {
   id Uuid @id @default(uuid())
   plan      String
-  requestId Uuid
-  request PlanRequest @relation(fields: [requestId], references: [id])
+  jobId Uuid
+  job Job @relation(fields: [jobId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt temporal.updatedAtString()
 }

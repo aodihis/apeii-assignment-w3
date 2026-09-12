@@ -33,9 +33,9 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'dfa087db5834be08e7c52f53ec3270307ea522b2f6aba56080f18e4aaa94b582'>;
+  StorageHashBase<'9608805d5d7a8a82cac641c3efb328b8898fdbaf8e3de0396a4284d823d45aab'>;
 export type ExecutionHash =
-  ExecutionHashBase<'4958e70791d78b17602db6ab22aa633cf64e5aaa8704368060885827c9e40d51'>;
+  ExecutionHashBase<'362ac0e4996287d38dee419f65eef2c21a35c33ac996c9dc3c6ef4c2110e4268'>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
 
@@ -241,7 +241,7 @@ type DefaultLiteralValue<CodecId extends string, Encoded> = CodecId extends keyo
 
 export type FieldOutputTypes = {
   readonly public: {
-    readonly PlanRequest: {
+    readonly Job: {
       readonly id: CodecTypes['pg/uuid@1']['output'];
       readonly goal: CodecTypes['pg/text@1']['output'];
       readonly equipment: CodecTypes['pg/text@1']['output'];
@@ -250,10 +250,10 @@ export type FieldOutputTypes = {
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
-    readonly PlanResult: {
+    readonly JobResult: {
       readonly id: CodecTypes['pg/uuid@1']['output'];
       readonly plan: CodecTypes['pg/text@1']['output'];
-      readonly requestId: CodecTypes['pg/uuid@1']['output'];
+      readonly jobId: CodecTypes['pg/uuid@1']['output'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
@@ -261,7 +261,7 @@ export type FieldOutputTypes = {
 };
 export type FieldInputTypes = {
   readonly public: {
-    readonly PlanRequest: {
+    readonly Job: {
       readonly id: CodecTypes['pg/uuid@1']['input'];
       readonly goal: CodecTypes['pg/text@1']['input'];
       readonly equipment: CodecTypes['pg/text@1']['input'];
@@ -270,10 +270,10 @@ export type FieldInputTypes = {
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
-    readonly PlanResult: {
+    readonly JobResult: {
       readonly id: CodecTypes['pg/uuid@1']['input'];
       readonly plan: CodecTypes['pg/text@1']['input'];
-      readonly requestId: CodecTypes['pg/uuid@1']['input'];
+      readonly jobId: CodecTypes['pg/uuid@1']['input'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
@@ -281,7 +281,7 @@ export type FieldInputTypes = {
 };
 export type StorageColumnTypes = {
   readonly public: {
-    readonly planRequest: {
+    readonly job: {
       readonly availableTime: CodecTypes['pg/text@1']['output'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly equipment: CodecTypes['pg/text@1']['output'];
@@ -290,18 +290,18 @@ export type StorageColumnTypes = {
       readonly status: 'pending' | 'finnish';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
-    readonly planResult: {
+    readonly jobResult: {
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly id: CodecTypes['pg/uuid@1']['output'];
+      readonly jobId: CodecTypes['pg/uuid@1']['output'];
       readonly plan: CodecTypes['pg/text@1']['output'];
-      readonly requestId: CodecTypes['pg/uuid@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
   };
 };
 export type StorageColumnInputTypes = {
   readonly public: {
-    readonly planRequest: {
+    readonly job: {
       readonly availableTime: CodecTypes['pg/text@1']['input'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly equipment: CodecTypes['pg/text@1']['input'];
@@ -310,11 +310,11 @@ export type StorageColumnInputTypes = {
       readonly status: 'pending' | 'finnish';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
-    readonly planResult: {
+    readonly jobResult: {
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly id: CodecTypes['pg/uuid@1']['input'];
+      readonly jobId: CodecTypes['pg/uuid@1']['input'];
       readonly plan: CodecTypes['pg/text@1']['input'];
-      readonly requestId: CodecTypes['pg/uuid@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
   };
@@ -337,7 +337,7 @@ type ContractBase = Omit<
         readonly kind: 'postgres-schema';
         readonly entries: {
           readonly table: {
-            readonly planRequest: {
+            readonly job: {
               columns: {
                 readonly id: {
                   readonly nativeType: 'uuid';
@@ -385,7 +385,7 @@ type ContractBase = Omit<
               indexes: readonly [];
               foreignKeys: readonly [];
             };
-            readonly planResult: {
+            readonly jobResult: {
               columns: {
                 readonly id: {
                   readonly nativeType: 'uuid';
@@ -397,7 +397,7 @@ type ContractBase = Omit<
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
                 };
-                readonly requestId: {
+                readonly jobId: {
                   readonly nativeType: 'uuid';
                   readonly codecId: 'pg/uuid@1';
                   readonly nullable: false;
@@ -418,9 +418,9 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'planResult_requestId_idx_fd667f92';
-                  readonly prefix: 'planResult_requestId_idx';
-                  readonly columns: readonly ['requestId'];
+                  readonly name: 'jobResult_jobId_idx_623c8f77';
+                  readonly prefix: 'jobResult_jobId_idx';
+                  readonly columns: readonly ['jobId'];
                   readonly unique: false;
                 },
               ];
@@ -428,12 +428,12 @@ type ContractBase = Omit<
                 {
                   readonly source: {
                     readonly namespaceId: 'public' & NamespaceId;
-                    readonly tableName: 'planResult';
-                    readonly columns: readonly ['requestId'];
+                    readonly tableName: 'jobResult';
+                    readonly columns: readonly ['jobId'];
                   };
                   readonly target: {
                     readonly namespaceId: 'public' & NamespaceId;
-                    readonly tableName: 'planRequest';
+                    readonly tableName: 'job';
                     readonly columns: readonly ['id'];
                   };
                 },
@@ -441,7 +441,7 @@ type ContractBase = Omit<
             };
           };
           readonly valueSet: {
-            readonly RequestStatus: {
+            readonly JobStatus: {
               readonly kind: 'valueSet';
               readonly values: readonly ['pending', 'finnish'];
             };
@@ -456,20 +456,14 @@ type ContractBase = Omit<
   readonly target: 'postgres';
   readonly targetFamily: 'sql';
   readonly roots: {
-    readonly planRequest: {
-      readonly namespace: 'public' & NamespaceId;
-      readonly model: 'PlanRequest';
-    };
-    readonly planResult: {
-      readonly namespace: 'public' & NamespaceId;
-      readonly model: 'PlanResult';
-    };
+    readonly job: { readonly namespace: 'public' & NamespaceId; readonly model: 'Job' };
+    readonly jobResult: { readonly namespace: 'public' & NamespaceId; readonly model: 'JobResult' };
   };
   readonly domain: {
     readonly namespaces: {
       readonly public: {
         readonly models: {
-          readonly PlanRequest: {
+          readonly Job: {
             readonly fields: {
               readonly id: {
                 readonly nullable: false;
@@ -508,7 +502,7 @@ type ContractBase = Omit<
             };
             readonly relations: Record<string, never>;
             readonly storage: {
-              readonly table: 'planRequest';
+              readonly table: 'job';
               readonly namespaceId: 'public';
               readonly fields: {
                 readonly id: { readonly column: 'id' };
@@ -521,7 +515,7 @@ type ContractBase = Omit<
               };
             };
           };
-          readonly PlanResult: {
+          readonly JobResult: {
             readonly fields: {
               readonly id: {
                 readonly nullable: false;
@@ -531,7 +525,7 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
-              readonly requestId: {
+              readonly jobId: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
               };
@@ -551,25 +545,22 @@ type ContractBase = Omit<
               };
             };
             readonly relations: {
-              readonly request: {
-                readonly to: {
-                  readonly namespace: 'public' & NamespaceId;
-                  readonly model: 'PlanRequest';
-                };
+              readonly job: {
+                readonly to: { readonly namespace: 'public' & NamespaceId; readonly model: 'Job' };
                 readonly cardinality: 'N:1';
                 readonly on: {
-                  readonly localFields: readonly ['requestId'];
+                  readonly localFields: readonly ['jobId'];
                   readonly targetFields: readonly ['id'];
                 };
               };
             };
             readonly storage: {
-              readonly table: 'planResult';
+              readonly table: 'jobResult';
               readonly namespaceId: 'public';
               readonly fields: {
                 readonly id: { readonly column: 'id' };
                 readonly plan: { readonly column: 'plan' };
-                readonly requestId: { readonly column: 'requestId' };
+                readonly jobId: { readonly column: 'jobId' };
                 readonly createdAt: { readonly column: 'createdAt' };
                 readonly updatedAt: { readonly column: 'updatedAt' };
               };
@@ -577,7 +568,7 @@ type ContractBase = Omit<
           };
         };
         readonly enum: {
-          readonly RequestStatus: {
+          readonly JobStatus: {
             readonly codecId: 'pg/text@1';
             readonly members: readonly [
               { readonly name: 'PENDING'; readonly value: 'pending' },
@@ -614,7 +605,7 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'planRequest';
+            readonly table: 'job';
             readonly column: 'id';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'uuidv4' };
@@ -622,7 +613,7 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'planRequest';
+            readonly table: 'job';
             readonly column: 'updatedAt';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'timestampNow' };
@@ -631,7 +622,7 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'planResult';
+            readonly table: 'jobResult';
             readonly column: 'id';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'uuidv4' };
@@ -639,7 +630,7 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'planResult';
+            readonly table: 'jobResult';
             readonly column: 'updatedAt';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'timestampNow' };
