@@ -2,6 +2,15 @@ import { generateCompletion } from "@anvia/core";
 import { Pipeline } from "@anvia/core/pipeline";
 import z from "zod";
 import { getModel } from "../../llm/models";
+import { logger } from "../../utils/logger";
+
+const logPipelineStep = (
+  step: string,
+  phase: "input" | "output",
+  data: unknown,
+) => {
+  logger.debug(`Study guide pipeline ${phase}`, { step, data });
+};
 
 const ANALYZE_REQUEST_INSTRUCTIONS = `
 You are an educational needs analyzer.
@@ -59,11 +68,19 @@ export const studyGuidePipeline = new Pipeline({
   .step({
     id: "analyze-request",
     run: async (context) => {
+      logPipelineStep("analyze-request", "input", context.input);
+      logger.debug("Study guide pipeline step started", {
+        step: "analyze-request",
+      });
       const response = await generateCompletion({
         model: getModel(),
         instructions: ANALYZE_REQUEST_INSTRUCTIONS,
         prompt: JSON.stringify(context.input),
         outputSchema: AnalysisSchema,
+      });
+      logPipelineStep("analyze-request", "output", response.output);
+      logger.debug("Study guide pipeline step completed", {
+        step: "analyze-request",
       });
 
       return {
@@ -77,6 +94,10 @@ export const studyGuidePipeline = new Pipeline({
     run: async (context) => {
       const { subject, topic, level, availableTime, analysis } = context.input;
 
+      logPipelineStep("create-outline", "input", context.input);
+      logger.debug("Study guide pipeline step started", {
+        step: "create-outline",
+      });
       const response = await generateCompletion({
         model: getModel(),
         instructions: CREATE_OUTLINE_INSTRUCTIONS,
@@ -88,6 +109,10 @@ export const studyGuidePipeline = new Pipeline({
           analysis,
         }),
         outputSchema: OutlineSchema,
+      });
+      logPipelineStep("create-outline", "output", response.output);
+      logger.debug("Study guide pipeline step completed", {
+        step: "create-outline",
       });
 
       return {
@@ -108,6 +133,10 @@ export const studyGuidePipeline = new Pipeline({
         outline,
       } = context.input;
 
+      logPipelineStep("write-and-review-guide", "input", context.input);
+      logger.debug("Study guide pipeline step started", {
+        step: "write-and-review-guide",
+      });
       const response = await generateCompletion({
         model: getModel(),
         instructions: WRITE_AND_REVIEW_GUIDE_INSTRUCTIONS,
@@ -119,6 +148,10 @@ export const studyGuidePipeline = new Pipeline({
           analysis,
           outline,
         }),
+      });
+      logPipelineStep("write-and-review-guide", "output", response.output);
+      logger.debug("Study guide pipeline step completed", {
+        step: "write-and-review-guide",
       });
 
       return { guide: response.output };

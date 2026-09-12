@@ -1,6 +1,28 @@
-type LogContext = Record<string, unknown>;
+import "dotenv/config";
 
-const writeLog = (level: string, message: string, context?: LogContext) => {
+type LogContext = Record<string, unknown>;
+type LogLevel = "debug" | "info" | "warn" | "error";
+
+const logLevelPriority: Record<LogLevel, number> = {
+  debug: 10,
+  info: 20,
+  warn: 30,
+  error: 40,
+};
+
+const isLogLevel = (value: string): value is LogLevel =>
+  value in logLevelPriority;
+
+const configuredLogLevel = process.env.LOG_LEVEL?.trim().toLowerCase();
+const minimumLogLevel: LogLevel = configuredLogLevel && isLogLevel(configuredLogLevel)
+  ? configuredLogLevel
+  : "info";
+
+const writeLog = (level: LogLevel, message: string, context?: LogContext) => {
+  if (logLevelPriority[level] < logLevelPriority[minimumLogLevel]) {
+    return;
+  }
+
   const entry = {
     timestamp: new Date().toISOString(),
     level,

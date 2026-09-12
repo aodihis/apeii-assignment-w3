@@ -1,8 +1,14 @@
 import { OpenAIClient } from "@anvia/openai";
 import "dotenv/config";
 
+const apiKey = process.env.LLM_API_KEY;
+
+if (!apiKey) {
+  throw new Error("LLM_API_KEY is required to initialize the LLM client");
+}
+
 export const client = new OpenAIClient({
-  apiKey: process.env.LLM_API_KEY || "",
+  apiKey,
   baseUrl: process.env.LLM_BASE_URL,
 });
 
