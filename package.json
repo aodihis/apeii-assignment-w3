@@ -2,9 +2,11 @@
   "name": "assignment-w3",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev:api": "tsx watch src/index.ts",
+    "dev:worker": "tsx watch src/worker/worker.ts",
     "build": "tsc",
     "start": "node dist/index.js",
+    "start:worker": "node dist/worker/worker.js",
     "contract:emit": "prisma contract emit"
   },
   "dependencies": {

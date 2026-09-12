@@ -1,5 +1,6 @@
 import { generateCompletion } from "@anvia/core";
 import { getModel } from "../../llm/models";
+import { logger } from "../../utils/logger";
 
 
 const SYSTEM_INSTRUCTIONS = `You are a workout plan generator.
@@ -27,6 +28,7 @@ export const generateWorkoutPlan = async (
   equipment: string,
   availableTime: string,
 ): Promise<string> => {
+  logger.debug("Requesting workout plan completion");
   const result = await generateCompletion({
     model: getModel(),
     instructions: SYSTEM_INSTRUCTIONS,
@@ -36,5 +38,6 @@ export const generateWorkoutPlan = async (
     - Available time: ${availableTime}`,
   });
 
+  logger.debug("Workout plan completion received");
   return result.output;
 };

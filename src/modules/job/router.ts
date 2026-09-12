@@ -3,6 +3,7 @@ import { db } from "../../utils/db";
 import { zValidator } from "@hono/zod-validator";
 import { CreatePlanSchema } from "./schema";
 import { queue } from "../../worker/queue";
+import { logger } from "../../utils/logger";
 
 
 export const planRouter = new Hono()
@@ -18,6 +19,7 @@ export const planRouter = new Hono()
             job.id.eq(id)).first();
 
         if (!job) {
+            logger.warn("Job lookup returned no result", { jobId: id });
             return c.json({ message: "Job not found" }, 404);
         }
         
@@ -35,6 +37,12 @@ export const planRouter = new Hono()
     .post('/', zValidator("json", CreatePlanSchema), async (c) => {
         const body = c.req.valid('json');
 
+        logger.debug("Creating workout plan job", {
+            goal: body.goal,
+            equipment: body.equipment,
+            availableTime: body.availableTime,
+        });
+
         const newJob = await db.orm.public.Job.create({
             goal: body.goal,
             equipment: body.equipment,
@@ -42,5 +50,6 @@ export const planRouter = new Hono()
         });
 
         await queue.add("generate-plan", {id: newJob.id});
+        logger.info("Workout plan job queued", { jobId: newJob.id });
         return c.json({message: "Plan request added"}, 202)
     })
