@@ -25,8 +25,12 @@
                 "value": "pending"
               },
               {
-                "name": "FINNISH",
-                "value": "finnish"
+                "name": "COMPLETED",
+                "value": "completed"
+              },
+              {
+                "name": "FAILED",
+                "value": "failed"
               }
             ]
           }
@@ -208,8 +212,8 @@
             "job": {
               "checks": [
                 {
-                  "expression": "\"status\" IN ('pending', 'finnish')",
-                  "name": "job_status_check_aa8e46e6",
+                  "expression": "\"status\" IN ('pending', 'completed', 'failed')",
+                  "name": "job_status_check_c4922048",
                   "prefix": "job_status_check"
                 }
               ],
@@ -346,7 +350,8 @@
               "kind": "valueSet",
               "values": [
                 "pending",
-                "finnish"
+                "completed",
+                "failed"
               ]
             }
           }
@@ -355,7 +360,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "9608805d5d7a8a82cac641c3efb328b8898fdbaf8e3de0396a4284d823d45aab"
+    "storageHash": "b494ac466c47e8fb1812599c54944fc0dfb370b40beb5ff1167a79e012357b10"
   },
   "execution": {
     "executionHash": "362ac0e4996287d38dee419f65eef2c21a35c33ac996c9dc3c6ef4c2110e4268",

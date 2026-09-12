@@ -33,7 +33,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'9608805d5d7a8a82cac641c3efb328b8898fdbaf8e3de0396a4284d823d45aab'>;
+  StorageHashBase<'b494ac466c47e8fb1812599c54944fc0dfb370b40beb5ff1167a79e012357b10'>;
 export type ExecutionHash =
   ExecutionHashBase<'362ac0e4996287d38dee419f65eef2c21a35c33ac996c9dc3c6ef4c2110e4268'>;
 export type ProfileHash =
@@ -246,7 +246,7 @@ export type FieldOutputTypes = {
       readonly goal: CodecTypes['pg/text@1']['output'];
       readonly equipment: CodecTypes['pg/text@1']['output'];
       readonly availableTime: CodecTypes['pg/text@1']['output'];
-      readonly status: 'pending' | 'finnish';
+      readonly status: 'pending' | 'completed' | 'failed';
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
@@ -266,7 +266,7 @@ export type FieldInputTypes = {
       readonly goal: CodecTypes['pg/text@1']['input'];
       readonly equipment: CodecTypes['pg/text@1']['input'];
       readonly availableTime: CodecTypes['pg/text@1']['input'];
-      readonly status: 'pending' | 'finnish';
+      readonly status: 'pending' | 'completed' | 'failed';
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
@@ -287,7 +287,7 @@ export type StorageColumnTypes = {
       readonly equipment: CodecTypes['pg/text@1']['output'];
       readonly goal: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/uuid@1']['output'];
-      readonly status: 'pending' | 'finnish';
+      readonly status: 'pending' | 'completed' | 'failed';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
     readonly jobResult: {
@@ -307,7 +307,7 @@ export type StorageColumnInputTypes = {
       readonly equipment: CodecTypes['pg/text@1']['input'];
       readonly goal: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/uuid@1']['input'];
-      readonly status: 'pending' | 'finnish';
+      readonly status: 'pending' | 'completed' | 'failed';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
     readonly jobResult: {
@@ -443,7 +443,7 @@ type ContractBase = Omit<
           readonly valueSet: {
             readonly JobStatus: {
               readonly kind: 'valueSet';
-              readonly values: readonly ['pending', 'finnish'];
+              readonly values: readonly ['pending', 'completed', 'failed'];
             };
           };
         };
@@ -572,7 +572,8 @@ type ContractBase = Omit<
             readonly codecId: 'pg/text@1';
             readonly members: readonly [
               { readonly name: 'PENDING'; readonly value: 'pending' },
-              { readonly name: 'FINNISH'; readonly value: 'finnish' },
+              { readonly name: 'COMPLETED'; readonly value: 'completed' },
+              { readonly name: 'FAILED'; readonly value: 'failed' },
             ];
           };
         };

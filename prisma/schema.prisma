@@ -2,7 +2,8 @@
 enum JobStatus {
   @@type("pg/text@1")
   PENDING = "pending"
-  FINNISH = "finnish"
+  COMPLETED = "completed"
+  FAILED = "failed"
 }
 model Job {
   id Uuid @id @default(uuid())
