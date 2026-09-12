@@ -53,5 +53,5 @@ export const studyGuideRouter = new Hono()
 
         await queue.add("generate-study-guide", {id: newJob.id});
         logger.info("Study guide job queued", { jobId: newJob.id });
-        return c.json({message: "Study guide request added"}, 202)
+        return c.json({message: "Study guide request added", jobId: newJob.id}, 202)
     })
