@@ -11,7 +11,7 @@ model Job {
   equipment String
   availableTime String
   status  JobStatus @default(PENDING)
-  createdAt DateTime  @default(now())
+  createdAt TimestamptzString @default(now())
   updatedAt temporal.updatedAtString()
 }
 
@@ -20,6 +20,6 @@ model JobResult {
   plan      String
   jobId Uuid
   job Job @relation(fields: [jobId], references: [id])
-  createdAt DateTime  @default(now())
+  createdAt TimestamptzString @default(now())
   updatedAt temporal.updatedAtString()
 }

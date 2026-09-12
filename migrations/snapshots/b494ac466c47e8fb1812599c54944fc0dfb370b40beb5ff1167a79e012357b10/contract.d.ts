@@ -33,7 +33,7 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'e2b8c5ff7fa2ae9da2096c3ac5c723c2048893f0e50ff17e3e5534deb176f0ae'>;
+  StorageHashBase<'b494ac466c47e8fb1812599c54944fc0dfb370b40beb5ff1167a79e012357b10'>;
 export type ExecutionHash =
   ExecutionHashBase<'362ac0e4996287d38dee419f65eef2c21a35c33ac996c9dc3c6ef4c2110e4268'>;
 export type ProfileHash =
@@ -247,14 +247,14 @@ export type FieldOutputTypes = {
       readonly equipment: CodecTypes['pg/text@1']['output'];
       readonly availableTime: CodecTypes['pg/text@1']['output'];
       readonly status: 'pending' | 'completed' | 'failed';
-      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
     readonly JobResult: {
       readonly id: CodecTypes['pg/uuid@1']['output'];
       readonly plan: CodecTypes['pg/text@1']['output'];
       readonly jobId: CodecTypes['pg/uuid@1']['output'];
-      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
   };
@@ -267,14 +267,14 @@ export type FieldInputTypes = {
       readonly equipment: CodecTypes['pg/text@1']['input'];
       readonly availableTime: CodecTypes['pg/text@1']['input'];
       readonly status: 'pending' | 'completed' | 'failed';
-      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
     readonly JobResult: {
       readonly id: CodecTypes['pg/uuid@1']['input'];
       readonly plan: CodecTypes['pg/text@1']['input'];
       readonly jobId: CodecTypes['pg/uuid@1']['input'];
-      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
   };
@@ -283,7 +283,7 @@ export type StorageColumnTypes = {
   readonly public: {
     readonly job: {
       readonly availableTime: CodecTypes['pg/text@1']['output'];
-      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly equipment: CodecTypes['pg/text@1']['output'];
       readonly goal: CodecTypes['pg/text@1']['output'];
       readonly id: CodecTypes['pg/uuid@1']['output'];
@@ -291,7 +291,7 @@ export type StorageColumnTypes = {
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
     readonly jobResult: {
-      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['output'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly id: CodecTypes['pg/uuid@1']['output'];
       readonly jobId: CodecTypes['pg/uuid@1']['output'];
       readonly plan: CodecTypes['pg/text@1']['output'];
@@ -303,7 +303,7 @@ export type StorageColumnInputTypes = {
   readonly public: {
     readonly job: {
       readonly availableTime: CodecTypes['pg/text@1']['input'];
-      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly equipment: CodecTypes['pg/text@1']['input'];
       readonly goal: CodecTypes['pg/text@1']['input'];
       readonly id: CodecTypes['pg/uuid@1']['input'];
@@ -311,7 +311,7 @@ export type StorageColumnInputTypes = {
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
     readonly jobResult: {
-      readonly createdAt: CodecTypes['pg/timestamptz-string@1']['input'];
+      readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly id: CodecTypes['pg/uuid@1']['input'];
       readonly jobId: CodecTypes['pg/uuid@1']['input'];
       readonly plan: CodecTypes['pg/text@1']['input'];
@@ -370,7 +370,7 @@ type ContractBase = Omit<
                 };
                 readonly createdAt: {
                   readonly nativeType: 'timestamptz';
-                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
                   readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
                 };
@@ -404,7 +404,7 @@ type ContractBase = Omit<
                 };
                 readonly createdAt: {
                   readonly nativeType: 'timestamptz';
-                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                   readonly nullable: false;
                   readonly default: { readonly kind: 'function'; readonly expression: 'now()' };
                 };
@@ -489,7 +489,7 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: {
                   readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                 };
               };
               readonly updatedAt: {
@@ -533,7 +533,7 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: {
                   readonly kind: 'scalar';
-                  readonly codecId: 'pg/timestamptz-string@1';
+                  readonly codecId: 'pg/timestamptz-temporal@1';
                 };
               };
               readonly updatedAt: {

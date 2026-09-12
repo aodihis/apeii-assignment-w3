@@ -31,5 +31,5 @@ serve({
   fetch: app.fetch,
   port: 3000
 }, (info) => {
-  logger.info('HTTP server started', { port: info.port })
+  console.log('HTTP server started', { port: info.port })
 })
