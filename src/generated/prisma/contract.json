@@ -1,0 +1,444 @@
+{
+  "schemaVersion": "1",
+  "targetFamily": "sql",
+  "target": "postgres",
+  "profileHash": "3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2",
+  "roots": {
+    "workoutRequest": {
+      "model": "WorkoutRequest",
+      "namespace": "public"
+    },
+    "workoutResult": {
+      "model": "WorkoutResult",
+      "namespace": "public"
+    }
+  },
+  "domain": {
+    "namespaces": {
+      "public": {
+        "enum": {
+          "RequestStatus": {
+            "codecId": "pg/text@1",
+            "members": [
+              {
+                "name": "PENDING",
+                "value": "pending"
+              },
+              {
+                "name": "FINNISH",
+                "value": "finnish"
+              }
+            ]
+          }
+        },
+        "models": {
+          "WorkoutRequest": {
+            "fields": {
+              "availableTime": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "equipment": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "goal": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "status": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                },
+                "valueSet": {
+                  "entityKind": "enum",
+                  "entityName": "RequestStatus",
+                  "namespaceId": "public",
+                  "plane": "domain"
+                }
+              },
+              "updatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "availableTime": {
+                  "column": "availableTime"
+                },
+                "createdAt": {
+                  "column": "createdAt"
+                },
+                "equipment": {
+                  "column": "equipment"
+                },
+                "goal": {
+                  "column": "goal"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "status": {
+                  "column": "status"
+                },
+                "updatedAt": {
+                  "column": "updatedAt"
+                }
+              },
+              "namespaceId": "public",
+              "table": "workoutRequest"
+            }
+          },
+          "WorkoutResult": {
+            "fields": {
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
+              "plan": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "updatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "kind": "scalar"
+                }
+              },
+              "workoutRequestId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {
+              "workoutRequest": {
+                "cardinality": "N:1",
+                "on": {
+                  "localFields": [
+                    "workoutRequestId"
+                  ],
+                  "targetFields": [
+                    "id"
+                  ]
+                },
+                "to": {
+                  "model": "WorkoutRequest",
+                  "namespace": "public"
+                }
+              }
+            },
+            "storage": {
+              "fields": {
+                "createdAt": {
+                  "column": "createdAt"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "plan": {
+                  "column": "plan"
+                },
+                "updatedAt": {
+                  "column": "updatedAt"
+                },
+                "workoutRequestId": {
+                  "column": "workoutRequestId"
+                }
+              },
+              "namespaceId": "public",
+              "table": "workoutResult"
+            }
+          }
+        }
+      }
+    }
+  },
+  "storage": {
+    "namespaces": {
+      "public": {
+        "entries": {
+          "table": {
+            "workoutRequest": {
+              "checks": [
+                {
+                  "expression": "\"status\" IN ('pending', 'finnish')",
+                  "name": "workoutRequest_status_check_aa8e46e6",
+                  "prefix": "workoutRequest_status_check"
+                }
+              ],
+              "columns": {
+                "availableTime": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "createdAt": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                },
+                "equipment": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "goal": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/uuid@1",
+                  "nativeType": "uuid",
+                  "nullable": false
+                },
+                "status": {
+                  "codecId": "pg/text@1",
+                  "default": {
+                    "kind": "literal",
+                    "value": "pending"
+                  },
+                  "nativeType": "text",
+                  "nullable": false,
+                  "valueSet": {
+                    "entityKind": "valueSet",
+                    "entityName": "RequestStatus",
+                    "namespaceId": "public",
+                    "plane": "storage"
+                  }
+                },
+                "updatedAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
+            },
+            "workoutResult": {
+              "columns": {
+                "createdAt": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                },
+                "id": {
+                  "codecId": "pg/uuid@1",
+                  "nativeType": "uuid",
+                  "nullable": false
+                },
+                "plan": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "updatedAt": {
+                  "codecId": "pg/timestamptz-string@1",
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                },
+                "workoutRequestId": {
+                  "codecId": "pg/uuid@1",
+                  "nativeType": "uuid",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [
+                {
+                  "source": {
+                    "columns": [
+                      "workoutRequestId"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "workoutResult"
+                  },
+                  "target": {
+                    "columns": [
+                      "id"
+                    ],
+                    "namespaceId": "public",
+                    "tableName": "workoutRequest"
+                  }
+                }
+              ],
+              "indexes": [
+                {
+                  "columns": [
+                    "workoutRequestId"
+                  ],
+                  "name": "workoutResult_workoutRequestId_idx_3895c3c7",
+                  "prefix": "workoutResult_workoutRequestId_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": []
+            }
+          },
+          "valueSet": {
+            "RequestStatus": {
+              "kind": "valueSet",
+              "values": [
+                "pending",
+                "finnish"
+              ]
+            }
+          }
+        },
+        "id": "public",
+        "kind": "postgres-schema"
+      }
+    },
+    "storageHash": "30bd07bfef0ee4bd42f1b86365a4cd38f7a3e4685d7fa001895a49eaaa34c1c7"
+  },
+  "execution": {
+    "executionHash": "b8083868907907541c27ad4fe5355741f225e9d5317fb6eb012dd33eaac06a15",
+    "mutations": {
+      "defaults": [
+        {
+          "onCreate": {
+            "id": "uuidv4",
+            "kind": "generator"
+          },
+          "ref": {
+            "column": "id",
+            "namespace": "public",
+            "table": "workoutRequest"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "timestampNow",
+            "kind": "generator"
+          },
+          "onUpdate": {
+            "id": "timestampNow",
+            "kind": "generator"
+          },
+          "ref": {
+            "column": "updatedAt",
+            "namespace": "public",
+            "table": "workoutRequest"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "uuidv4",
+            "kind": "generator"
+          },
+          "ref": {
+            "column": "id",
+            "namespace": "public",
+            "table": "workoutResult"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "timestampNow",
+            "kind": "generator"
+          },
+          "onUpdate": {
+            "id": "timestampNow",
+            "kind": "generator"
+          },
+          "ref": {
+            "column": "updatedAt",
+            "namespace": "public",
+            "table": "workoutResult"
+          }
+        }
+      ]
+    }
+  },
+  "capabilities": {
+    "postgres": {
+      "distinctOn": true,
+      "jsonAgg": true,
+      "lateral": true,
+      "limit": true,
+      "orderBy": true,
+      "returning": true
+    },
+    "sql": {
+      "checkConstraint": true,
+      "defaultInInsert": true,
+      "enums": true,
+      "lateral": true,
+      "returning": true,
+      "scalarList": true
+    }
+  },
+  "extensions": {},
+  "meta": {},
+  "_generated": {
+    "warning": "⚠️  GENERATED FILE - DO NOT EDIT",
+    "message": "This file is automatically generated by \"prisma contract emit\".",
+    "regenerate": "To regenerate, run: prisma contract emit"
+  }
+}

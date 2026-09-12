@@ -1,0 +1,24 @@
+// use prisma-next
+enum RequestStatus {
+  @@type("pg/text@1")
+  PENDING = "pending"
+  FINNISH = "finnish"
+}
+model WorkoutRequest {
+  id Uuid @id @default(uuid())
+  goal      String
+  equipment String
+  availableTime String
+  status  RequestStatus @default(PENDING)
+  createdAt DateTime  @default(now())
+  updatedAt temporal.updatedAtString()
+}
+
+model WorkoutResult {
+  id Uuid @id @default(uuid())
+  plan      String
+  workoutRequestId Uuid
+  workoutRequest WorkoutRequest @relation(fields: [workoutRequestId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt temporal.updatedAtString()
+}
