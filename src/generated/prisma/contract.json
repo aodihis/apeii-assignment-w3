@@ -4,12 +4,12 @@
   "target": "postgres",
   "profileHash": "3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2",
   "roots": {
-    "workoutRequest": {
-      "model": "WorkoutRequest",
+    "planRequest": {
+      "model": "PlanRequest",
       "namespace": "public"
     },
-    "workoutResult": {
-      "model": "WorkoutResult",
+    "planResult": {
+      "model": "PlanResult",
       "namespace": "public"
     }
   },
@@ -32,7 +32,7 @@
           }
         },
         "models": {
-          "WorkoutRequest": {
+          "PlanRequest": {
             "fields": {
               "availableTime": {
                 "nullable": false,
@@ -116,10 +116,10 @@
                 }
               },
               "namespaceId": "public",
-              "table": "workoutRequest"
+              "table": "planRequest"
             }
           },
-          "WorkoutResult": {
+          "PlanResult": {
             "fields": {
               "createdAt": {
                 "nullable": false,
@@ -142,34 +142,34 @@
                   "kind": "scalar"
                 }
               },
+              "requestId": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/uuid@1",
+                  "kind": "scalar"
+                }
+              },
               "updatedAt": {
                 "nullable": false,
                 "type": {
                   "codecId": "pg/timestamptz-string@1",
                   "kind": "scalar"
                 }
-              },
-              "workoutRequestId": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/uuid@1",
-                  "kind": "scalar"
-                }
               }
             },
             "relations": {
-              "workoutRequest": {
+              "request": {
                 "cardinality": "N:1",
                 "on": {
                   "localFields": [
-                    "workoutRequestId"
+                    "requestId"
                   ],
                   "targetFields": [
                     "id"
                   ]
                 },
                 "to": {
-                  "model": "WorkoutRequest",
+                  "model": "PlanRequest",
                   "namespace": "public"
                 }
               }
@@ -185,15 +185,15 @@
                 "plan": {
                   "column": "plan"
                 },
+                "requestId": {
+                  "column": "requestId"
+                },
                 "updatedAt": {
                   "column": "updatedAt"
-                },
-                "workoutRequestId": {
-                  "column": "workoutRequestId"
                 }
               },
               "namespaceId": "public",
-              "table": "workoutResult"
+              "table": "planResult"
             }
           }
         }
@@ -205,12 +205,12 @@
       "public": {
         "entries": {
           "table": {
-            "workoutRequest": {
+            "planRequest": {
               "checks": [
                 {
                   "expression": "\"status\" IN ('pending', 'finnish')",
-                  "name": "workoutRequest_status_check_aa8e46e6",
-                  "prefix": "workoutRequest_status_check"
+                  "name": "planRequest_status_check_aa8e46e6",
+                  "prefix": "planRequest_status_check"
                 }
               ],
               "columns": {
@@ -273,7 +273,7 @@
               },
               "uniques": []
             },
-            "workoutResult": {
+            "planResult": {
               "columns": {
                 "createdAt": {
                   "codecId": "pg/timestamptz-temporal@1",
@@ -294,14 +294,14 @@
                   "nativeType": "text",
                   "nullable": false
                 },
+                "requestId": {
+                  "codecId": "pg/uuid@1",
+                  "nativeType": "uuid",
+                  "nullable": false
+                },
                 "updatedAt": {
                   "codecId": "pg/timestamptz-string@1",
                   "nativeType": "timestamptz",
-                  "nullable": false
-                },
-                "workoutRequestId": {
-                  "codecId": "pg/uuid@1",
-                  "nativeType": "uuid",
                   "nullable": false
                 }
               },
@@ -309,27 +309,27 @@
                 {
                   "source": {
                     "columns": [
-                      "workoutRequestId"
+                      "requestId"
                     ],
                     "namespaceId": "public",
-                    "tableName": "workoutResult"
+                    "tableName": "planResult"
                   },
                   "target": {
                     "columns": [
                       "id"
                     ],
                     "namespaceId": "public",
-                    "tableName": "workoutRequest"
+                    "tableName": "planRequest"
                   }
                 }
               ],
               "indexes": [
                 {
                   "columns": [
-                    "workoutRequestId"
+                    "requestId"
                   ],
-                  "name": "workoutResult_workoutRequestId_idx_3895c3c7",
-                  "prefix": "workoutResult_workoutRequestId_idx",
+                  "name": "planResult_requestId_idx_fd667f92",
+                  "prefix": "planResult_requestId_idx",
                   "unique": false
                 }
               ],
@@ -355,10 +355,10 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "30bd07bfef0ee4bd42f1b86365a4cd38f7a3e4685d7fa001895a49eaaa34c1c7"
+    "storageHash": "dfa087db5834be08e7c52f53ec3270307ea522b2f6aba56080f18e4aaa94b582"
   },
   "execution": {
-    "executionHash": "b8083868907907541c27ad4fe5355741f225e9d5317fb6eb012dd33eaac06a15",
+    "executionHash": "4958e70791d78b17602db6ab22aa633cf64e5aaa8704368060885827c9e40d51",
     "mutations": {
       "defaults": [
         {
@@ -369,7 +369,7 @@
           "ref": {
             "column": "id",
             "namespace": "public",
-            "table": "workoutRequest"
+            "table": "planRequest"
           }
         },
         {
@@ -384,7 +384,7 @@
           "ref": {
             "column": "updatedAt",
             "namespace": "public",
-            "table": "workoutRequest"
+            "table": "planRequest"
           }
         },
         {
@@ -395,7 +395,7 @@
           "ref": {
             "column": "id",
             "namespace": "public",
-            "table": "workoutResult"
+            "table": "planResult"
           }
         },
         {
@@ -410,7 +410,7 @@
           "ref": {
             "column": "updatedAt",
             "namespace": "public",
-            "table": "workoutResult"
+            "table": "planResult"
           }
         }
       ]

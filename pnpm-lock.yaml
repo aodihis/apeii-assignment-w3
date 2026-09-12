@@ -8,9 +8,18 @@ importers:
 
   .:
     dependencies:
+      '@anvia/core':
+        specifier: ^1.2.1
+        version: 1.2.1(zod@4.6.2)
+      '@anvia/openai':
+        specifier: ^1.1.3
+        version: 1.1.3(@anvia/core@1.2.1(zod@4.6.2))(@aws-sdk/credential-provider-node@3.972.83)(@smithy/signature-v4@5.7.3)(undici@7.29.1)(ws@8.21.3)(zod@4.6.2)
       '@hono/node-server':
         specifier: ^2.1.1
         version: 2.1.1(hono@4.13.7)
+      '@hono/zod-validator':
+        specifier: ^0.9.1
+        version: 0.9.1(hono@4.13.7)(zod@4.6.2)
       '@prisma/orm-postgres':
         specifier: 8.0.0-rc.9
         version: 8.0.0-rc.9(@prisma/cli-engine@0.2.3(magicast@0.5.4))(magicast@0.5.4)(typanion@3.14.0)(typescript@7.0.2)(vite@8.2.2(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.13)(yaml@2.9.0))
@@ -20,6 +29,9 @@ importers:
       hono:
         specifier: ^4.13.7
         version: 4.13.7
+      zod:
+        specifier: ^4.6.2
+        version: 4.6.2
     devDependencies:
       '@prisma/cli-engine':
         specifier: 0.2.3
@@ -69,6 +81,16 @@ packages:
 
   '@alchemy.run/node-utils@2.0.0-beta.74':
     resolution: {integrity: sha512-UH7mbmF0qZWL0b5xURFaRbKR2qNXdvxEjIq86FdqSKacnH0lsHSgGzNKFbDSKFAY1u6Kq3unHFmgRk7UAD/YTQ==}
+
+  '@anvia/core@1.2.1':
+    resolution: {integrity: sha512-TOyBhSHUmYkKYWmVy9Yput47b5dsbkHc+0x8XCMt7ZWqv3f5ZAKd5CiKsvN49qEvyJXyVwZ2qeU7UULCGQPRDw==}
+    peerDependencies:
+      zod: ^4.4.0
+
+  '@anvia/openai@1.1.3':
+    resolution: {integrity: sha512-U70vMFyOhWAJhBna85VTfX9x42NZ2BcqliimPJRRIzzErF+bPCtNeeNmmfR7WyYEeCZykaWAZ/CIG14WBaIrxQ==}
+    peerDependencies:
+      '@anvia/core': ^1.2.0
 
   '@ark/schema@0.56.2':
     resolution: {integrity: sha512-Qx4D2JFbBWpntiHZaTv7bGG4H/M2rigiknezKg/WVyDSaLdE4YCcWAOoFB7pjjDqHbbV2OqRfntm1nnXvwMexg==}
@@ -487,6 +509,12 @@ packages:
     engines: {node: '>=20'}
     peerDependencies:
       hono: ^4
+
+  '@hono/zod-validator@0.9.1':
+    resolution: {integrity: sha512-iiv6w0qrIc0arfvCtUqBWsvl4fXjzaTcQcCJTTtCnkawF9HHGE+KjEl0ox3gQJ6rKZEgE3mLExlQCF72M+mNuw==}
+    peerDependencies:
+      hono: '>=4.11.2'
+      zod: ^3.25.0 || ^4.0.0
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -2188,6 +2216,30 @@ packages:
     resolution: {integrity: sha512-RWqF+pBSkqecEvCKOn8QYhaNdRMJDZRIrlS/7rTDdLHaPcfXGCZ/h8zb413NfvdeAV0MR7T1yJcA34/q+CSm1Q==}
     engines: {node: '>=20'}
 
+  openai@7.15.0:
+    resolution: {integrity: sha512-2DIwesnPSduw68MFx7nAdgvshrgvS8WOan5W8+tgUMlAy/tY+Q41g80Pa+w/v64rHA6rtn+dketa8QvMVxU96w==}
+    engines: {node: '>=22.0.0'}
+    peerDependencies:
+      '@aws-sdk/credential-provider-node': '>=3.972.0 <4'
+      '@smithy/hash-node': '>=4.3.0 <5'
+      '@smithy/signature-v4': '>=5.4.0 <6'
+      undici: '>=5 <9'
+      ws: ^8.21.0
+      zod: ^3.25 || ^4.0
+    peerDependenciesMeta:
+      '@aws-sdk/credential-provider-node':
+        optional: true
+      '@smithy/hash-node':
+        optional: true
+      '@smithy/signature-v4':
+        optional: true
+      undici:
+        optional: true
+      ws:
+        optional: true
+      zod:
+        optional: true
+
   openapi-fetch@0.14.0:
     resolution: {integrity: sha512-PshIdm1NgdLvb05zp8LqRQMNSKzIlPkyMxYFxwyHR+UlKD4t2nUjkDhNxeRbhRSEd3x5EUNh2w5sJYwkhOH4fg==}
 
@@ -2803,6 +2855,9 @@ packages:
   zeptomatch@2.1.0:
     resolution: {integrity: sha512-KiGErG2J0G82LSpniV0CtIzjlJ10E04j02VOudJsPyPwNZgGnRKQy7I1R7GMyg/QswnE4l7ohSGrQbQbjXPPDA==}
 
+  zod@4.6.2:
+    resolution: {integrity: sha512-lh5RCAGFa1Cm2hjtNwLQhSs/AsqdWnTQaBER9fEwN/88pSh7KOtJavtBx/0VlkN/uFd61SwYmljLMDAsHlvzBQ==}
+
 snapshots:
 
   '@alcalzone/ansi-tokenize@0.2.5':
@@ -2836,6 +2891,23 @@ snapshots:
       effect: 4.0.0-rc.111
 
   '@alchemy.run/node-utils@2.0.0-beta.74': {}
+
+  '@anvia/core@1.2.1(zod@4.6.2)':
+    dependencies:
+      yaml: 2.9.0
+      zod: 4.6.2
+
+  '@anvia/openai@1.1.3(@anvia/core@1.2.1(zod@4.6.2))(@aws-sdk/credential-provider-node@3.972.83)(@smithy/signature-v4@5.7.3)(undici@7.29.1)(ws@8.21.3)(zod@4.6.2)':
+    dependencies:
+      '@anvia/core': 1.2.1(zod@4.6.2)
+      openai: 7.15.0(@aws-sdk/credential-provider-node@3.972.83)(@smithy/signature-v4@5.7.3)(undici@7.29.1)(ws@8.21.3)(zod@4.6.2)
+    transitivePeerDependencies:
+      - '@aws-sdk/credential-provider-node'
+      - '@smithy/hash-node'
+      - '@smithy/signature-v4'
+      - undici
+      - ws
+      - zod
 
   '@ark/schema@0.56.2':
     dependencies:
@@ -3269,6 +3341,11 @@ snapshots:
   '@hono/node-server@2.1.1(hono@4.13.7)':
     dependencies:
       hono: 4.13.7
+
+  '@hono/zod-validator@0.9.1(hono@4.13.7)(zod@4.6.2)':
+    dependencies:
+      hono: 4.13.7
+      zod: 4.6.2
 
   '@img/colour@1.1.0': {}
 
@@ -4883,6 +4960,14 @@ snapshots:
       powershell-utils: 0.2.1
       wsl-utils: 1.0.0
 
+  openai@7.15.0(@aws-sdk/credential-provider-node@3.972.83)(@smithy/signature-v4@5.7.3)(undici@7.29.1)(ws@8.21.3)(zod@4.6.2):
+    optionalDependencies:
+      '@aws-sdk/credential-provider-node': 3.972.83
+      '@smithy/signature-v4': 5.7.3
+      undici: 7.29.1
+      ws: 8.21.3
+      zod: 4.6.2
+
   openapi-fetch@0.14.0:
     dependencies:
       openapi-typescript-helpers: 0.0.15
@@ -5508,3 +5593,5 @@ snapshots:
     dependencies:
       grammex: 3.1.13
       graphmatch: 1.1.1
+
+  zod@4.6.2: {}

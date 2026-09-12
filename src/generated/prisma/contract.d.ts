@@ -33,9 +33,9 @@ import type {
 } from '@prisma/orm-postgres/contract/types';
 
 export type StorageHash =
-  StorageHashBase<'30bd07bfef0ee4bd42f1b86365a4cd38f7a3e4685d7fa001895a49eaaa34c1c7'>;
+  StorageHashBase<'dfa087db5834be08e7c52f53ec3270307ea522b2f6aba56080f18e4aaa94b582'>;
 export type ExecutionHash =
-  ExecutionHashBase<'b8083868907907541c27ad4fe5355741f225e9d5317fb6eb012dd33eaac06a15'>;
+  ExecutionHashBase<'4958e70791d78b17602db6ab22aa633cf64e5aaa8704368060885827c9e40d51'>;
 export type ProfileHash =
   ProfileHashBase<'3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2'>;
 
@@ -241,7 +241,7 @@ type DefaultLiteralValue<CodecId extends string, Encoded> = CodecId extends keyo
 
 export type FieldOutputTypes = {
   readonly public: {
-    readonly WorkoutRequest: {
+    readonly PlanRequest: {
       readonly id: CodecTypes['pg/uuid@1']['output'];
       readonly goal: CodecTypes['pg/text@1']['output'];
       readonly equipment: CodecTypes['pg/text@1']['output'];
@@ -250,10 +250,10 @@ export type FieldOutputTypes = {
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
-    readonly WorkoutResult: {
+    readonly PlanResult: {
       readonly id: CodecTypes['pg/uuid@1']['output'];
       readonly plan: CodecTypes['pg/text@1']['output'];
-      readonly workoutRequestId: CodecTypes['pg/uuid@1']['output'];
+      readonly requestId: CodecTypes['pg/uuid@1']['output'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
@@ -261,7 +261,7 @@ export type FieldOutputTypes = {
 };
 export type FieldInputTypes = {
   readonly public: {
-    readonly WorkoutRequest: {
+    readonly PlanRequest: {
       readonly id: CodecTypes['pg/uuid@1']['input'];
       readonly goal: CodecTypes['pg/text@1']['input'];
       readonly equipment: CodecTypes['pg/text@1']['input'];
@@ -270,10 +270,10 @@ export type FieldInputTypes = {
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
-    readonly WorkoutResult: {
+    readonly PlanResult: {
       readonly id: CodecTypes['pg/uuid@1']['input'];
       readonly plan: CodecTypes['pg/text@1']['input'];
-      readonly workoutRequestId: CodecTypes['pg/uuid@1']['input'];
+      readonly requestId: CodecTypes['pg/uuid@1']['input'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
@@ -281,7 +281,7 @@ export type FieldInputTypes = {
 };
 export type StorageColumnTypes = {
   readonly public: {
-    readonly workoutRequest: {
+    readonly planRequest: {
       readonly availableTime: CodecTypes['pg/text@1']['output'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly equipment: CodecTypes['pg/text@1']['output'];
@@ -290,18 +290,18 @@ export type StorageColumnTypes = {
       readonly status: 'pending' | 'finnish';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
     };
-    readonly workoutResult: {
+    readonly planResult: {
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['output'];
       readonly id: CodecTypes['pg/uuid@1']['output'];
       readonly plan: CodecTypes['pg/text@1']['output'];
+      readonly requestId: CodecTypes['pg/uuid@1']['output'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['output'];
-      readonly workoutRequestId: CodecTypes['pg/uuid@1']['output'];
     };
   };
 };
 export type StorageColumnInputTypes = {
   readonly public: {
-    readonly workoutRequest: {
+    readonly planRequest: {
       readonly availableTime: CodecTypes['pg/text@1']['input'];
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly equipment: CodecTypes['pg/text@1']['input'];
@@ -310,12 +310,12 @@ export type StorageColumnInputTypes = {
       readonly status: 'pending' | 'finnish';
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
     };
-    readonly workoutResult: {
+    readonly planResult: {
       readonly createdAt: CodecTypes['pg/timestamptz-temporal@1']['input'];
       readonly id: CodecTypes['pg/uuid@1']['input'];
       readonly plan: CodecTypes['pg/text@1']['input'];
+      readonly requestId: CodecTypes['pg/uuid@1']['input'];
       readonly updatedAt: CodecTypes['pg/timestamptz-string@1']['input'];
-      readonly workoutRequestId: CodecTypes['pg/uuid@1']['input'];
     };
   };
 };
@@ -337,7 +337,7 @@ type ContractBase = Omit<
         readonly kind: 'postgres-schema';
         readonly entries: {
           readonly table: {
-            readonly workoutRequest: {
+            readonly planRequest: {
               columns: {
                 readonly id: {
                   readonly nativeType: 'uuid';
@@ -385,7 +385,7 @@ type ContractBase = Omit<
               indexes: readonly [];
               foreignKeys: readonly [];
             };
-            readonly workoutResult: {
+            readonly planResult: {
               columns: {
                 readonly id: {
                   readonly nativeType: 'uuid';
@@ -397,7 +397,7 @@ type ContractBase = Omit<
                   readonly codecId: 'pg/text@1';
                   readonly nullable: false;
                 };
-                readonly workoutRequestId: {
+                readonly requestId: {
                   readonly nativeType: 'uuid';
                   readonly codecId: 'pg/uuid@1';
                   readonly nullable: false;
@@ -418,9 +418,9 @@ type ContractBase = Omit<
               uniques: readonly [];
               indexes: readonly [
                 {
-                  readonly name: 'workoutResult_workoutRequestId_idx_3895c3c7';
-                  readonly prefix: 'workoutResult_workoutRequestId_idx';
-                  readonly columns: readonly ['workoutRequestId'];
+                  readonly name: 'planResult_requestId_idx_fd667f92';
+                  readonly prefix: 'planResult_requestId_idx';
+                  readonly columns: readonly ['requestId'];
                   readonly unique: false;
                 },
               ];
@@ -428,12 +428,12 @@ type ContractBase = Omit<
                 {
                   readonly source: {
                     readonly namespaceId: 'public' & NamespaceId;
-                    readonly tableName: 'workoutResult';
-                    readonly columns: readonly ['workoutRequestId'];
+                    readonly tableName: 'planResult';
+                    readonly columns: readonly ['requestId'];
                   };
                   readonly target: {
                     readonly namespaceId: 'public' & NamespaceId;
-                    readonly tableName: 'workoutRequest';
+                    readonly tableName: 'planRequest';
                     readonly columns: readonly ['id'];
                   };
                 },
@@ -456,20 +456,20 @@ type ContractBase = Omit<
   readonly target: 'postgres';
   readonly targetFamily: 'sql';
   readonly roots: {
-    readonly workoutRequest: {
+    readonly planRequest: {
       readonly namespace: 'public' & NamespaceId;
-      readonly model: 'WorkoutRequest';
+      readonly model: 'PlanRequest';
     };
-    readonly workoutResult: {
+    readonly planResult: {
       readonly namespace: 'public' & NamespaceId;
-      readonly model: 'WorkoutResult';
+      readonly model: 'PlanResult';
     };
   };
   readonly domain: {
     readonly namespaces: {
       readonly public: {
         readonly models: {
-          readonly WorkoutRequest: {
+          readonly PlanRequest: {
             readonly fields: {
               readonly id: {
                 readonly nullable: false;
@@ -508,7 +508,7 @@ type ContractBase = Omit<
             };
             readonly relations: Record<string, never>;
             readonly storage: {
-              readonly table: 'workoutRequest';
+              readonly table: 'planRequest';
               readonly namespaceId: 'public';
               readonly fields: {
                 readonly id: { readonly column: 'id' };
@@ -521,7 +521,7 @@ type ContractBase = Omit<
               };
             };
           };
-          readonly WorkoutResult: {
+          readonly PlanResult: {
             readonly fields: {
               readonly id: {
                 readonly nullable: false;
@@ -531,7 +531,7 @@ type ContractBase = Omit<
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/text@1' };
               };
-              readonly workoutRequestId: {
+              readonly requestId: {
                 readonly nullable: false;
                 readonly type: { readonly kind: 'scalar'; readonly codecId: 'pg/uuid@1' };
               };
@@ -551,25 +551,25 @@ type ContractBase = Omit<
               };
             };
             readonly relations: {
-              readonly workoutRequest: {
+              readonly request: {
                 readonly to: {
                   readonly namespace: 'public' & NamespaceId;
-                  readonly model: 'WorkoutRequest';
+                  readonly model: 'PlanRequest';
                 };
                 readonly cardinality: 'N:1';
                 readonly on: {
-                  readonly localFields: readonly ['workoutRequestId'];
+                  readonly localFields: readonly ['requestId'];
                   readonly targetFields: readonly ['id'];
                 };
               };
             };
             readonly storage: {
-              readonly table: 'workoutResult';
+              readonly table: 'planResult';
               readonly namespaceId: 'public';
               readonly fields: {
                 readonly id: { readonly column: 'id' };
                 readonly plan: { readonly column: 'plan' };
-                readonly workoutRequestId: { readonly column: 'workoutRequestId' };
+                readonly requestId: { readonly column: 'requestId' };
                 readonly createdAt: { readonly column: 'createdAt' };
                 readonly updatedAt: { readonly column: 'updatedAt' };
               };
@@ -614,7 +614,7 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'workoutRequest';
+            readonly table: 'planRequest';
             readonly column: 'id';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'uuidv4' };
@@ -622,7 +622,7 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'workoutRequest';
+            readonly table: 'planRequest';
             readonly column: 'updatedAt';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'timestampNow' };
@@ -631,7 +631,7 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'workoutResult';
+            readonly table: 'planResult';
             readonly column: 'id';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'uuidv4' };
@@ -639,7 +639,7 @@ type ContractBase = Omit<
         {
           readonly ref: {
             readonly namespace: 'public';
-            readonly table: 'workoutResult';
+            readonly table: 'planResult';
             readonly column: 'updatedAt';
           };
           readonly onCreate: { readonly kind: 'generator'; readonly id: 'timestampNow' };

@@ -4,7 +4,7 @@ enum RequestStatus {
   PENDING = "pending"
   FINNISH = "finnish"
 }
-model WorkoutRequest {
+model PlanRequest {
   id Uuid @id @default(uuid())
   goal      String
   equipment String
@@ -14,11 +14,11 @@ model WorkoutRequest {
   updatedAt temporal.updatedAtString()
 }
 
-model WorkoutResult {
+model PlanResult {
   id Uuid @id @default(uuid())
   plan      String
-  workoutRequestId Uuid
-  workoutRequest WorkoutRequest @relation(fields: [workoutRequestId], references: [id])
+  requestId Uuid
+  request PlanRequest @relation(fields: [requestId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt temporal.updatedAtString()
 }
