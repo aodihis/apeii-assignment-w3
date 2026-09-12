@@ -23,19 +23,26 @@ export const worker = new Worker(
       throw new Error(`Job with ID ${workoutJobId} not found`);
     }
 
-    const workoutPlan = await generateWorkoutPlan(
-      workoutJob.goal,
-      workoutJob.equipment,
-      workoutJob.availableTime,
-    );
+    try {
+      const workoutPlan = await generateWorkoutPlan(
+        workoutJob.goal,
+        workoutJob.equipment,
+        workoutJob.availableTime,
+      );
 
-    await db.orm.public.JobResult.create({
-      jobId: workoutJob.id,
-      plan: workoutPlan,
-    });
-    await db.orm.public.Job.where((job) => job.id.eq(workoutJobId)).update({
-      status: "completed",
-    });
+      await db.orm.public.JobResult.create({
+        jobId: workoutJob.id,
+        plan: workoutPlan,
+      });
+      await db.orm.public.Job.where((job) => job.id.eq(workoutJobId)).update({
+        status: "completed",
+      });
+    } catch (error) {
+      await db.orm.public.Job.where((job) => job.id.eq(workoutJobId)).update({
+        status: "failed",
+      });
+      throw error;
+    }
   },
   {
     connection: workerConnection,

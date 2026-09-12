@@ -1,0 +1,19 @@
+meta {
+  name: Get Missing Job
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/plans/00000000-0000-0000-0000-000000000000
+}
+
+tests {
+  test("returns 404 Not Found", function() {
+    expect(res.getStatus()).to.equal(404);
+  });
+
+  test("returns a not found message", function() {
+    expect(res.getBody().message).to.equal("Job not found");
+  });
+}

@@ -1,0 +1,28 @@
+meta {
+  name: Create Plan
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/plans
+  body: json
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "goal": "Build upper-body strength",
+    "equipment": "Dumbbells",
+    "availableTime": "30 minutes"
+  }
+}
+
+tests {
+  test("returns 202 Accepted", function() {
+    expect(res.getStatus()).to.equal(202);
+  });
+}

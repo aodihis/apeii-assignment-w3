@@ -1,0 +1,20 @@
+meta {
+  name: Get Job Result
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/plans/{{jobId}}
+}
+
+tests {
+  test("returns a job result response", function() {
+    expect(res.getStatus()).to.be.oneOf([200, 404]);
+  });
+
+  test("returns one plan or null", function() {
+    const body = res.getBody();
+    expect(body).to.have.property("plan");
+  });
+}
