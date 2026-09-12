@@ -1,6 +1,6 @@
 import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
-import { planRouter } from './modules/job/router'
+import { studyGuideRouter } from './modules/job/router'
 import { errorMessage, logger } from './utils/logger'
 
 const app = new Hono()
@@ -25,7 +25,7 @@ app.onError((error, c) => {
   return c.json({ message: 'Internal server error' }, 500);
 });
 
-app.route('/plans', planRouter)
+app.route('/study-guides', studyGuideRouter)
 
 serve({
   fetch: app.fetch,

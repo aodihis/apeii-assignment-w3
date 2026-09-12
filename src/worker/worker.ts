@@ -1,62 +1,64 @@
 import { Worker } from "bullmq";
 import { QUEUE_NAME, workerConnection } from "./config";
 import { db } from "../utils/db";
-import { generateWorkoutPlan } from "../modules/job/service";
+import { generateStudyGuide } from "../modules/job/service";
 import { errorMessage, logger } from "../utils/logger";
 
 export const worker = new Worker(
   QUEUE_NAME,
   async (job) => {
-    const workoutJobId = job.data.id;
+    const studyGuideJobId = job.data.id;
     logger.debug("Queue job received", {
       queueJobId: job.id,
-      jobId: workoutJobId,
+      jobId: studyGuideJobId,
     });
 
-    if (!workoutJobId) {
-      logger.error("Queue job is missing a workout job ID", {
+    if (!studyGuideJobId) {
+      logger.error("Queue job is missing a study guide job ID", {
         queueJobId: job.id,
       });
       throw new Error("Job ID is missing");
     }
 
-    const workoutJob = await db.orm.public.Job.where((job) =>
-      job.id.eq(workoutJobId),
+    const studyGuideJob = await db.orm.public.Job.where((job) =>
+      job.id.eq(studyGuideJobId),
     ).first();
 
     if (
-      !workoutJob?.goal ||
-      !workoutJob?.equipment ||
-      !workoutJob?.availableTime
+      !studyGuideJob?.subject ||
+      !studyGuideJob?.topic ||
+      !studyGuideJob?.level ||
+      !studyGuideJob?.availableTime
     ) {
-      logger.error("Workout job could not be found or is incomplete", {
-        jobId: workoutJobId,
+      logger.error("Study guide job could not be found or is incomplete", {
+        jobId: studyGuideJobId,
       });
-      throw new Error(`Job with ID ${workoutJobId} not found`);
+      throw new Error(`Job with ID ${studyGuideJobId} not found`);
     }
 
     try {
-      logger.info("Workout plan generation started", { jobId: workoutJobId });
-      const workoutPlan = await generateWorkoutPlan(
-        workoutJob.goal,
-        workoutJob.equipment,
-        workoutJob.availableTime,
+      logger.info("Study guide generation started", { jobId: studyGuideJobId });
+      const studyGuide = await generateStudyGuide(
+        studyGuideJob.subject,
+        studyGuideJob.topic,
+        studyGuideJob.level,
+        studyGuideJob.availableTime,
       );
 
       await db.orm.public.JobResult.create({
-        jobId: workoutJob.id,
-        plan: workoutPlan,
+        jobId: studyGuideJob.id,
+        guide: studyGuide,
       });
-      await db.orm.public.Job.where((job) => job.id.eq(workoutJobId)).update({
+      await db.orm.public.Job.where((job) => job.id.eq(studyGuideJobId)).update({
         status: "completed",
       });
-      logger.info("Workout plan generation completed", { jobId: workoutJobId });
+      logger.info("Study guide generation completed", { jobId: studyGuideJobId });
     } catch (error) {
-      await db.orm.public.Job.where((job) => job.id.eq(workoutJobId)).update({
+      await db.orm.public.Job.where((job) => job.id.eq(studyGuideJobId)).update({
         status: "failed",
       });
-      logger.error("Workout plan generation failed", {
-        jobId: workoutJobId,
+      logger.error("Study guide generation failed", {
+        jobId: studyGuideJobId,
         error: errorMessage(error),
       });
       throw error;

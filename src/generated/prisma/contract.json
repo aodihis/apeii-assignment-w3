@@ -52,21 +52,14 @@
                   "kind": "scalar"
                 }
               },
-              "equipment": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/text@1",
-                  "kind": "scalar"
-                }
-              },
-              "goal": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/text@1",
-                  "kind": "scalar"
-                }
-              },
               "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "level": {
                 "nullable": false,
                 "type": {
                   "codecId": "pg/text@1",
@@ -86,6 +79,20 @@
                   "plane": "domain"
                 }
               },
+              "subject": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "topic": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
               "updatedAt": {
                 "nullable": false,
                 "type": {
@@ -103,17 +110,20 @@
                 "createdAt": {
                   "column": "createdAt"
                 },
-                "equipment": {
-                  "column": "equipment"
-                },
-                "goal": {
-                  "column": "goal"
-                },
                 "id": {
                   "column": "id"
                 },
+                "level": {
+                  "column": "level"
+                },
                 "status": {
                   "column": "status"
+                },
+                "subject": {
+                  "column": "subject"
+                },
+                "topic": {
+                  "column": "topic"
                 },
                 "updatedAt": {
                   "column": "updatedAt"
@@ -132,6 +142,13 @@
                   "kind": "scalar"
                 }
               },
+              "guide": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
               "id": {
                 "nullable": false,
                 "type": {
@@ -140,13 +157,6 @@
                 }
               },
               "jobId": {
-                "nullable": false,
-                "type": {
-                  "codecId": "pg/text@1",
-                  "kind": "scalar"
-                }
-              },
-              "plan": {
                 "nullable": false,
                 "type": {
                   "codecId": "pg/text@1",
@@ -183,14 +193,14 @@
                 "createdAt": {
                   "column": "createdAt"
                 },
+                "guide": {
+                  "column": "guide"
+                },
                 "id": {
                   "column": "id"
                 },
                 "jobId": {
                   "column": "jobId"
-                },
-                "plan": {
-                  "column": "plan"
                 },
                 "updatedAt": {
                   "column": "updatedAt"
@@ -232,17 +242,12 @@
                   "nativeType": "timestamptz",
                   "nullable": false
                 },
-                "equipment": {
-                  "codecId": "pg/text@1",
-                  "nativeType": "text",
-                  "nullable": false
-                },
-                "goal": {
-                  "codecId": "pg/text@1",
-                  "nativeType": "text",
-                  "nullable": false
-                },
                 "id": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "level": {
                   "codecId": "pg/text@1",
                   "nativeType": "text",
                   "nullable": false
@@ -261,6 +266,16 @@
                     "namespaceId": "public",
                     "plane": "storage"
                   }
+                },
+                "subject": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "topic": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
                 },
                 "updatedAt": {
                   "codecId": "pg/timestamptz-string@1",
@@ -288,17 +303,17 @@
                   "nativeType": "timestamptz",
                   "nullable": false
                 },
+                "guide": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
                 "id": {
                   "codecId": "pg/text@1",
                   "nativeType": "text",
                   "nullable": false
                 },
                 "jobId": {
-                  "codecId": "pg/text@1",
-                  "nativeType": "text",
-                  "nullable": false
-                },
-                "plan": {
                   "codecId": "pg/text@1",
                   "nativeType": "text",
                   "nullable": false
@@ -360,7 +375,7 @@
         "kind": "postgres-schema"
       }
     },
-    "storageHash": "c2bb5ce5377d0cbf1b907c1a14a0c2c784548ff4a016839feee08a5e668bc7c0"
+    "storageHash": "c80c0fe33357d31175bbb4af5d56f26ac15017106824b671801a89b55c1334db"
   },
   "execution": {
     "executionHash": "362ac0e4996287d38dee419f65eef2c21a35c33ac996c9dc3c6ef4c2110e4268",

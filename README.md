@@ -5,7 +5,7 @@ pnpm prisma:contract
 pnpm dev
 ```
 
-`pnpm db:migrate` initializes or updates the local database from
+`pnpm db:migrate` initializes or updates the local study-guide database from
 `prisma/schema.prisma`. `pnpm prisma:contract` emits the generated Prisma
 contract into `src/generated/prisma`.
 

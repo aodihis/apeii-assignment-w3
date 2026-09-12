@@ -3,41 +3,45 @@ import { getModel } from "../../llm/models";
 import { logger } from "../../utils/logger";
 
 
-const SYSTEM_INSTRUCTIONS = `You are a workout plan generator.
+const SYSTEM_INSTRUCTIONS = `You are a study guide generator.
 
-Generate a simple and practical workout plan based on the user's:
+Generate a simple and practical study guide based on the user's:
 
-* Goal
-* Equipment
+* Subject
+* Topic
+* Level
 * Available time
 
-Make sure the exercises match the available equipment and the workout fits within the available time.
+Make sure the guide is appropriate for the learner's level and fits within the available time.
 
 Include:
 
-* Exercises
-* Sets and reps
-* Rest time
-* Short instructions when useful
+* Learning objectives
+* A clear sequence of concepts to study
+* Explanations and examples when useful
+* Practice questions or activities
+* A short review checklist
 
-Keep the plan realistic, clear, and easy to follow.
-`
+Keep the guide realistic, clear, and easy to follow.
+`;
 
-export const generateWorkoutPlan = async (
-  goal: string,
-  equipment: string,
+export const generateStudyGuide = async (
+  subject: string,
+  topic: string,
+  level: string,
   availableTime: string,
 ): Promise<string> => {
-  logger.debug("Requesting workout plan completion");
+  logger.debug("Requesting study guide completion");
   const result = await generateCompletion({
     model: getModel(),
     instructions: SYSTEM_INSTRUCTIONS,
-    prompt: `User inputs:
-    - Goal: ${goal}
-    - Equipment: ${equipment}
+    prompt: `Learner inputs:
+    - Subject: ${subject}
+    - Topic: ${topic}
+    - Level: ${level}
     - Available time: ${availableTime}`,
   });
 
-  logger.debug("Workout plan completion received");
+  logger.debug("Study guide completion received");
   return result.output;
 };

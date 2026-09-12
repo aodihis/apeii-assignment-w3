@@ -1,11 +1,11 @@
 meta {
-  name: Create Plan
+  name: Create Study Guide
   type: http
   seq: 1
 }
 
 post {
-  url: {{baseUrl}}/plans
+  url: {{baseUrl}}/study-guides
   body: json
 }
 
@@ -15,8 +15,9 @@ headers {
 
 body:json {
   {
-    "goal": "Build upper-body strength",
-    "equipment": "Dumbbells",
+    "subject": "Biology",
+    "topic": "Cellular respiration",
+    "level": "High school",
     "availableTime": "30 minutes"
   }
 }

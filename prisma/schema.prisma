@@ -7,8 +7,9 @@ enum JobStatus {
 }
 model Job {
   id String @id @default(uuid())
-  goal      String
-  equipment String
+  subject String
+  topic String
+  level String
   availableTime String
   status  JobStatus @default(PENDING)
   createdAt TimestamptzString @default(now())
@@ -17,7 +18,7 @@ model Job {
 
 model JobResult {
   id String @id @default(uuid())
-  plan      String
+  guide String
   jobId String
   job Job @relation(fields: [jobId], references: [id])
   createdAt TimestamptzString @default(now())

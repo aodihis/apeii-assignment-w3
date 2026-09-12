@@ -1,24 +1,24 @@
 services:
   db:
     image: postgres:16
-    container_name: workout-postgres
+    container_name: study-guide-postgres
     environment:
       POSTGRES_USER: psql
       POSTGRES_PASSWORD: letmein
-      POSTGRES_DB: workout
+      POSTGRES_DB: study_guide
     ports:
       - "55432:5432"
     volumes:
-      - workout_db:/var/lib/postgresql/data
+      - study_guide_db:/var/lib/postgresql/data
 
   redis:
     image: redis:7
-    container_name: workout-redis
+    container_name: study-guide-redis
     ports:
       - "6380:6379"
     volumes:
-      - workout_redis:/data
+      - study_guide_redis:/data
 
 volumes:
-  workout_db:
-  workout_redis:
+  study_guide_db:
+  study_guide_redis:

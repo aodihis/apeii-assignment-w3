@@ -1,12 +1,12 @@
 import { Hono } from "hono";
 import { db } from "../../utils/db";
 import { zValidator } from "@hono/zod-validator";
-import { CreatePlanSchema } from "./schema";
+import { CreateStudyGuideSchema } from "./schema";
 import { queue } from "../../worker/queue";
 import { logger } from "../../utils/logger";
 
 
-export const planRouter = new Hono()
+export const studyGuideRouter = new Hono()
     .get('/', async (c) => {
         const jobs = await db.orm.public.Job.all();
         return c.json({
@@ -34,22 +34,24 @@ export const planRouter = new Hono()
             result: result ?? null
         })
     })
-    .post('/', zValidator("json", CreatePlanSchema), async (c) => {
+    .post('/', zValidator("json", CreateStudyGuideSchema), async (c) => {
         const body = c.req.valid('json');
 
-        logger.debug("Creating workout plan job", {
-            goal: body.goal,
-            equipment: body.equipment,
+        logger.debug("Creating study guide job", {
+            subject: body.subject,
+            topic: body.topic,
+            level: body.level,
             availableTime: body.availableTime,
         });
 
         const newJob = await db.orm.public.Job.create({
-            goal: body.goal,
-            equipment: body.equipment,
+            subject: body.subject,
+            topic: body.topic,
+            level: body.level,
             availableTime: body.availableTime
         });
 
-        await queue.add("generate-plan", {id: newJob.id});
-        logger.info("Workout plan job queued", { jobId: newJob.id });
-        return c.json({message: "Plan request added"}, 202)
+        await queue.add("generate-study-guide", {id: newJob.id});
+        logger.info("Study guide job queued", { jobId: newJob.id });
+        return c.json({message: "Study guide request added"}, 202)
     })

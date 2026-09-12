@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "Workout Plans API",
+  "name": "Study Guides API",
   "type": "collection",
   "environments": [
     "local"
