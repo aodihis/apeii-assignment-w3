@@ -6,12 +6,18 @@ import { queue } from "../../worker/queue";
 import { logger } from "../../utils/logger";
 
 
-export const studyGuideRouter = new Hono()
+export const jobRouter = new Hono()
     .get('/', async (c) => {
         const jobs = await db.orm.public.Job.all();
-        return c.json({
-            jobs: jobs
-        })
+        const jobsWithResults = await Promise.all(jobs.map(async (job) => ({
+            ...job,
+            result: job.status === "completed"
+                ? await db.orm.public.JobResult.where((result) =>
+                    result.jobId.eq(job.id)).first()
+                : null,
+        })));
+
+        return c.json(jobsWithResults)
     })
     .get('/:id', async (c) => {
         const { id } = c.req.param();
@@ -29,9 +35,8 @@ export const studyGuideRouter = new Hono()
             : null;
 
         return c.json({
-            jobId: id,
-            status: job.status,
-            result: result ?? null
+            ...job,
+            result: result ?? null,
         })
     })
     .post('/', zValidator("json", CreateStudyGuideSchema), async (c) => {
@@ -53,5 +58,5 @@ export const studyGuideRouter = new Hono()
 
         await queue.add("generate-study-guide", {id: newJob.id});
         logger.info("Study guide job queued", { jobId: newJob.id });
-        return c.json({message: "Study guide request added", jobId: newJob.id}, 202)
+        return c.json({ jobId: newJob.id, status: newJob.status }, 202)
     })

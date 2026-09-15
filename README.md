@@ -75,10 +75,10 @@ http://localhost:3000
 
 ## API Endpoints
 
-### Create a Study-Guide Job
+### Create a Job
 
 ```http
-POST /study-guides
+POST /jobs
 Content-Type: application/json
 ```
 
@@ -103,44 +103,48 @@ Response:
 
 ```json
 {
-  "message": "Study guide request added"
+  "jobId": "e265b198-5d62-40dc-a463-ee328bc869d0",
+  "status": "pending"
 }
 ```
 
-### List Study-Guide Jobs
+### List Jobs
 
 ```http
-GET /study-guides
+GET /jobs
 ```
 
 Example response:
 
 ```json
-{
-  "jobs": [
-    {
-      "id": "e265b198-5d62-40dc-a463-ee328bc869d0",
-      "subject": "Biology",
-      "topic": "Cellular respiration",
-      "level": "High school",
-      "availableTime": "50 minutes",
-      "status": "completed"
+[
+  {
+    "id": "e265b198-5d62-40dc-a463-ee328bc869d0",
+    "subject": "Biology",
+    "topic": "Cellular respiration",
+    "level": "High school",
+    "availableTime": "50 minutes",
+    "status": "completed",
+    "result": {
+      "id": "8aa0b9cf-3b83-4ccd-9c3b-4dd0ca7f86d1",
+      "jobId": "e265b198-5d62-40dc-a463-ee328bc869d0",
+      "guide": "# Cellular Respiration\\n\\n..."
     }
-  ]
-}
+  }
+]
 ```
 
-### Get a Study-Guide Job
+### Get a Job
 
 ```http
-GET /study-guides/:id
+GET /jobs/:id
 ```
 
 While the job is being processed:
 
 ```json
 {
-  "jobId": "e265b198-5d62-40dc-a463-ee328bc869d0",
+  "id": "e265b198-5d62-40dc-a463-ee328bc869d0",
   "status": "pending",
   "result": null
 }
@@ -150,7 +154,7 @@ When the job is completed:
 
 ```json
 {
-  "jobId": "e265b198-5d62-40dc-a463-ee328bc869d0",
+  "id": "e265b198-5d62-40dc-a463-ee328bc869d0",
   "status": "completed",
   "result": {
     "id": "8aa0b9cf-3b83-4ccd-9c3b-4dd0ca7f86d1",
@@ -164,7 +168,7 @@ If the job fails:
 
 ```json
 {
-  "jobId": "e265b198-5d62-40dc-a463-ee328bc869d0",
+  "id": "e265b198-5d62-40dc-a463-ee328bc869d0",
   "status": "failed",
   "result": null
 }
@@ -184,10 +188,10 @@ If the job does not exist:
 
 ## Example Flow
 
-Create a study-guide job:
+Create a job:
 
 ```bash
-curl -X POST http://localhost:3000/study-guides \
+curl -X POST http://localhost:3000/jobs \
   -H "Content-Type: application/json" \
   -d '{
     "subject": "Biology",
@@ -200,13 +204,13 @@ curl -X POST http://localhost:3000/study-guides \
 List all jobs:
 
 ```bash
-curl http://localhost:3000/study-guides
+curl http://localhost:3000/jobs
 ```
 
 Fetch one job by ID:
 
 ```bash
-curl http://localhost:3000/study-guides/<job-id>
+curl http://localhost:3000/jobs/<job-id>
 ```
 
 The result endpoint can be called again until the job status is `completed` or
